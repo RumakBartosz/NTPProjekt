@@ -1,3 +1,9 @@
+//TODO 1.Rand 1-9
+//     2.Elementarna postac tabeli
+//     3.Wstaw element do tabeli (przy pomocy jsDOM, prawdopodobnie child elementow tr/td)
+//     4.Elementy serialize dodajace funkcjonalnosci
+//     5.Rank do modelu i jego wyswietlanie na stronie userow
+
 //$(document).ready(function(){
 $( document ).on('turbolinks:load', function() {
   attachListeners();
@@ -31,12 +37,6 @@ function checkTie(turn) {
 }
 
 function attachListeners() {
-  //var tdTags = document.getElementsByTagName("td");
-
-  //for (var i = 0 ; i < tdTags.length ; i++){
-  //  tdTags[i].addEventListener("click", doTurn(event))
-  //};
-
   $("tbody").click(function(event) {
     doTurn(event)
   });
@@ -52,11 +52,6 @@ function attachListeners() {
   $("#previous").click(function() {
     getAllGames();
   });
-  //$('td').each(function(index, td){ //needed to use an anonymous function, scope issue?
-  //  $(this).on("click", function(){
-  //    doTurn(event);
-  //  })
-//});
 };
 
 function player() {
@@ -95,12 +90,6 @@ var resetState = function() {
 
 var updateState = function(event) {
   $(event.target).html(player());
-
-  //var tdArr = []
-  //$('td').each(function(index, td){
-  //  tdArr.push(td.textContent);
-  //});
-  //currentGame = tdArr
 };
 
 function getMarks() {
@@ -126,10 +115,9 @@ function resumeGame(existingMarks, gameId) {
 var getAllGames = function() {
   $.getJSON("/games", function(data) {
     showGames(data.games)
-    //append to dom function
   });
 };
-//test
+
 var showGames = function(games) {
   var dom = $()
   games.forEach(function(game) {
@@ -145,16 +133,6 @@ var showGame = function(game) {
   });
   return newGame
 }
-//var saveGame = function() {
-//  if (currentGame === 0) {
-//    var serializedGame = {game: {state: currentGame}}
-//    var savedGame = $.post("/games", serializedGame)
-
-//    savedGame.done(function(data) {
-//      debugger;
-//    })
-//  }
-//};
 
 var save = function(resetCurrentGame) {
   var url, method;
