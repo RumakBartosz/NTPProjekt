@@ -1,5 +1,7 @@
-$(function() {
+//$(document).ready(function(){
+$( document ).on('turbolinks:load', function() {
   attachListeners();
+
 });
 
 var turn = 0;
@@ -186,3 +188,4 @@ var save = function(resetCurrentGame) {
 var message = function(text) {
   $('#message').html(text);
 }
+
