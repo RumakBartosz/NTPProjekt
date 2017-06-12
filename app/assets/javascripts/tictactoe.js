@@ -1,8 +1,9 @@
-//TODO 1.Rand 1-9
-//     2.Elementarna postac tabeli
-//     3.Wstaw element do tabeli (przy pomocy jsDOM, prawdopodobnie child elementow tr/td)
+//TODO 1.Rand 1-9 									   	DONE
+//     2.Elementarna postac tabeli 							   	DONE
+//     3.Wstaw element do tabeli (przy pomocy jsDOM, prawdopodobnie child elementow tr/td) 	DONE
 //     4.Elementy serialize dodajace funkcjonalnosci
 //     5.Rank do modelu i jego wyswietlanie na stronie userow
+//     6.Poprawienie bledow przy kilkukrotnym kliknieciu					DONE/2
 
 //$(document).ready(function(){
 $( document ).on('turbolinks:load', function() {
@@ -22,7 +23,7 @@ function doTurn(event) {
   } else if(checkTie(turn)) {
     save(true)
     resetState();
-    message('Tie game')
+    alert('Remis!')
   } else {
     turn += 1;
   }
@@ -75,7 +76,7 @@ function checkCombo(combo, tdArr){
 function checkWinner() {
   for(i = 0; i < combos.length; i++){
     if (checkCombo(combos[i], getMarks())){
-      message('Player ' + player() + ' Won!')
+      alert('Wygrywa gracz ' + player() + '!')
       return true;
     }
   }
@@ -89,7 +90,22 @@ var resetState = function() {
 }
 
 var updateState = function(event) {
+if(turn % 2 == 0)
   $(event.target).html(player());
+else{
+  for(;;)
+  {
+    var x = Math.floor(Math.random() * 3);
+    var y = Math.floor(Math.random() * 3);
+
+    var t = document.getElementById("myTable");
+    if(t.rows[x].cells[y].innerHTML != 'X' && t.rows[x].cells[y].innerHTML != 'O'){
+      t.rows[x].cells[y].innerHTML = 'O';
+    break;
+  }
+}
+
+}
 };
 
 function getMarks() {
