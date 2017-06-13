@@ -1,7 +1,6 @@
 //TODO 1.Rand 1-9 									   	DONE
 //     2.Elementarna postac tabeli 							   	DONE
 //     3.Wstaw element do tabeli (przy pomocy jsDOM, prawdopodobnie child elementow tr/td) 	DONE
-//     4.Elementy serialize dodajace funkcjonalnosci
 //     5.Rank do modelu i jego wyswietlanie na stronie userow
 //     6.Poprawienie bledow przy kilkukrotnym kliknieciu					DONE/2
 
@@ -18,10 +17,8 @@ var currentGame = 0;
 function doTurn(event) {
   updateState(event);
   if(checkWinner()) {
-    save(true)
     resetState();
   } else if(checkTie(turn)) {
-    save(true)
     resetState();
     alert('Remis!')
   } else {
@@ -37,9 +34,14 @@ function checkTie(turn) {
   }
 }
 
+  function isEmpty( el ){
+      return !$.trim(el.html())
+  }
+
 function attachListeners() {
   $("tbody").click(function(event) {
-    doTurn(event)
+     if (isEmpty($(event.target)) || turn % 2 == 1) {
+      doTurn(event)}
   });
 
   $('#previous').click(function(event) {
@@ -90,8 +92,15 @@ var resetState = function() {
 }
 
 var updateState = function(event) {
-if(turn % 2 == 0)
-  $(event.target).html(player());
+if(turn % 2 == 0){
+
+
+      $(event.target).html(player());
+
+  
+}
+
+
 else{
   for(;;)
   {
@@ -150,34 +159,6 @@ var showGame = function(game) {
   return newGame
 }
 
-var save = function(resetCurrentGame) {
-  var url, method;
-  if(currentGame) {
-    url = "/games/" + currentGame
-    method = "PATCH"
-  } else {
-    url = "/games"
-    method = "POST"
-  }
-
-  $.ajax({
-    url: url,
-    method: method,
-    dataType: "json",
-    data: {
-      game: {
-        state: getMarks()
-      }
-    },
-    success: function(data) {
-      if(resetCurrentGame) {
-        currentGame = undefined;
-      } else {
-        currentGame = data.game.id;
-      }
-    }
-  })
-};
 
 var message = function(text) {
   $('#message').html(text);

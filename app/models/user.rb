@@ -14,4 +14,10 @@ class User < ApplicationRecord
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
+
+
+  def User.rank_up
+    User.rank = User.rank + 5
+
+  end
 end

@@ -11,13 +11,6 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get graj" do
-    get graj_path
-    assert_response :success
-    assert_select "title", "Graj | #{@base_title}"
-
-  end
-
   test "should get about" do
     get about_path
     assert_response :success
