@@ -8,6 +8,8 @@ class StaticPagesController < ApplicationController
      flash[:error] = "Aby zagrać, musisz być zalogowany."   
      redirect_to root_path
    end
+   else   
+     @user = User.find(session[:user_id])
   end
 
   def about
