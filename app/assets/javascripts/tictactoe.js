@@ -4,8 +4,8 @@
 //     5.Rank do modelu i jego wyswietlanie na stronie userow					DONE/2
 //     6.Poprawienie bledow przy kilkukrotnym kliknieciu					DONE
 
-$(document).ready(function(){
-//$( document ).on('turbolinks:load', function() {
+//$(document).ready(function(){
+$( document ).on('turbolinks:load', function() {
   attachListeners();
 
 });
