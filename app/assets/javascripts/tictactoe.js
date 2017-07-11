@@ -9,7 +9,7 @@ $( document ).on('turbolinks:load', function() {
   attachListeners();
 
 });
-var currentGame = 0;
+var currentGame = 0;			//global var
 var flag = 0;
 var rank = 0;
 var turn = 0;
@@ -23,7 +23,7 @@ var check = [[0, 1, 2],
 	      [2, 4, 6]];
 
 
-function doTurn(event) {
+function doTurn(event) {		//game logic
   updateState(event);
   if(checkWinner()) {
     save(true) 
@@ -53,7 +53,7 @@ function doTurn(event) {
 
 };
 
-function tie(turn) {
+function tie(turn) {			//tie logic
   if (turn === 8) {
     return true;
   } else {
@@ -61,11 +61,11 @@ function tie(turn) {
   }
 }
 
-  function isEmpty( el ){
+  function isEmpty( el ){		//empty check
       return !$.trim(el.html())
   }
 
-function attachListeners() {
+function attachListeners() {				//event handler add
   $("tbody").click(function(event) {
      if (isEmpty($(event.target)) || turn % 2 == 1) {
       doTurn(event)}
@@ -80,7 +80,7 @@ function attachListeners() {
  // });
 };
 
-function player() {
+function player() {					//player check
   if (turn % 2 == 0) {
     return 'X'
   } else {
@@ -88,7 +88,7 @@ function player() {
   };
 };
 
-function checkCombo(combo, tdArr){
+function checkCombo(combo, tdArr){			//win check
     if ((tdArr[combo[0]] === "X") && (tdArr[combo[1]] === "X") && (tdArr[combo[2]] === "X")){
       return true;
     }else if ((tdArr[combo[0]] === "O") && (tdArr[combo[1]] === "O") && (tdArr[combo[2]] === "O")) {
@@ -110,13 +110,13 @@ post_rank()
   return false;
 };
 
-var resetState = function() {
+var resetState = function() {				//pole -> empty
   turn = 0;
   currentGame = 0;
   $('td').empty();
 }
 
-var moveAI = function(){
+var moveAI = function(){				//AI if
 
   for(;;)
   {
@@ -371,7 +371,7 @@ var moveAI = function(){
 
 };
 
-var updateState = function(event) {
+var updateState = function(event) {			//state up
 if(turn % 2 == 0){
       $(event.target).html(player());
 }
