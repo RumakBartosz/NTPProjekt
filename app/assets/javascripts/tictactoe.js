@@ -9,19 +9,26 @@ $( document ).on('turbolinks:load', function() {
   attachListeners();
 
 });
-
-var turn = 0;
-var combos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 var currentGame = 0;
 var flag = 0;
 var rank = 0;
+var turn = 0;
+var check = [[0, 1, 2],
+	      [3, 4, 5], 
+	      [6, 7, 8], 
+	      [0, 3, 6], 
+	      [1, 4, 7], 
+	      [2, 5, 8], 
+	      [0, 4, 8], 
+	      [2, 4, 6]];
+
 
 function doTurn(event) {
   updateState(event);
   if(checkWinner()) {
     save(true) 
     resetState();
-  } else if(checkTie(turn)) {
+  } else if(tie(turn)) {
     save(true) 
     resetState();
     alert('Remis!')
@@ -36,7 +43,7 @@ function doTurn(event) {
   if(checkWinner()) {
     save(true) 
     resetState();
-  } else if(checkTie(turn)) {
+  } else if(tie(turn)) {
     save(true) 
     resetState();
     alert('Remis!')
@@ -46,7 +53,7 @@ function doTurn(event) {
 
 };
 
-function checkTie(turn) {
+function tie(turn) {
   if (turn === 8) {
     return true;
   } else {
@@ -92,8 +99,8 @@ function checkCombo(combo, tdArr){
 };
 
 function checkWinner() {
-  for(i = 0; i < combos.length; i++){
-    if (checkCombo(combos[i], getMarks())){
+  for(i = 0; i < check.length; i++){
+    if (checkCombo(check[i], getMarks())){
       //up_rank()
 post_rank()
       alert('Wygrywa gracz ' + player() + '!')
@@ -366,9 +373,7 @@ var moveAI = function(){
 
 var updateState = function(event) {
 if(turn % 2 == 0){
-
       $(event.target).html(player());
-  
 }
 
 
@@ -385,40 +390,6 @@ function getMarks() {
   return marks;
 };
 
-function resumeGame(existingMarks, gameId) {
-  resetState()
-  var localExistingMarks = existingMarks.split(",")
-  turn = localExistingMarks.filter(String).length
-  var indexMatch = 0
-  $("td").each(function() {
-    this.append(localExistingMarks[indexMatch])
-    indexMatch++
-  })
-  currentGame = gameId
-}
-
-var getAllGames = function() {
-  $.getJSON("/games", function(data) {
-    showGames(data.games)
-  });
-};
-
-var showGames = function(games) {
-  var dom = $()
-  games.forEach(function(game) {
-    dom = dom.add(showGame(game));
-  })
-  $("#games").html(dom);
-}
-
-var showGame = function(game) {
-  var newGame = $('<button>', {'id': 'aGame', 'data-state': game.state, 'data-gameid': game.id, text: game.id});
-  newGame.click(function() {
-    resumeGame(this.getAttribute("data-state"), this.getAttribute("data-gameid"));
-       
-  });
-  return newGame;
-}
 
 var save = function(resetCurrentGame) {
   var url, method;
@@ -440,10 +411,10 @@ var save = function(resetCurrentGame) {
       }
     },
     success: function(data) {
-      if(resetCurrentGame) {        //if win or tie, true param is passed to reset board state
+      if(resetCurrentGame) {        
         resetState();
       } else {
-        currentGame = data.game.id; //or to set currentGame
+        currentGame = data.game.id;
       }
     }
   });
