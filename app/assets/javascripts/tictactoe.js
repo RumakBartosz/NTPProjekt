@@ -382,7 +382,7 @@ else{
 }
 };
 
-function getMarks() {
+function getMarks() {					//pole get
   var marks = []
    $("td").each(function(i) {
      marks.push($(this).text())
@@ -391,7 +391,7 @@ function getMarks() {
 };
 
 
-var save = function(resetCurrentGame) {
+var save = function(resetCurrentGame) {			//pole save, ewentualna implementacja
   var url, method;
   if(currentGame) {
     url = "/games/" + currentGame
@@ -420,7 +420,7 @@ var save = function(resetCurrentGame) {
   });
 };
 
-////////////////////////////////
+////////////////////////////////rank up
 var up_rank = function() {
   
   $.ajax({
@@ -454,7 +454,7 @@ var post_rank = function() {
   });
 };
 
-var message = function(text) {
+var message = function(text) {				//mess
   $('#message').html(text);
 }
 
